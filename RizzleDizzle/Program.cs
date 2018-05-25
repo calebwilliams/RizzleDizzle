@@ -1,22 +1,48 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using RizzleDizzle.Config.Settings;
+using RizzleDizzle.Interfaces;
+using RizzleDizzle.Services;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace RizzleDizzle
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            var provider = services.BuildServiceProvider();
+            await provider.GetService<App>().Run();
+        }
+
+        private static void ConfigureServices(ServiceCollection services)
+        {
+            services.AddSingleton(new LoggerFactory()
+                .AddConsole()
+                .AddDebug());
+            services.AddLogging();
+
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath($"{Directory.GetCurrentDirectory()}/Config/")
+                .AddJsonFile("app-settings.json", false)
+                .Build();
+            services.AddOptions();
+
+            services.Configure<RuneScapeSettings>(configuration.GetSection("RuneScapeSettings"));
+
+            //services.Configure<MongoDBService.Config.MongoDBSettings>(configuration.GetSection("MongoDBSettings"));
+
+            //services.AddTransient<IMongoDBService, MongoDBService.Services.MongoDBService>();
+
+            services.AddTransient<IRuneScapeKeyboardService, RuneScapeKeyboardService>();
+
+            services.AddTransient<App>();
         }
     }
 
-    public class RunescapeProcessService
-    {
-
-    }
-
-    public class RunescapeKeyboardInputService
-    {
-
-    }
 }
