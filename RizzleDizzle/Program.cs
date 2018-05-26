@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MongoDBService.Services;
 using RizzleDizzle.Config.Settings;
 using RizzleDizzle.Interfaces;
 using RizzleDizzle.Services;
@@ -34,13 +35,11 @@ namespace RizzleDizzle
             services.AddOptions();
 
             services.Configure<RuneScapeSettings>(configuration.GetSection("RuneScapeSettings"));
+            services.Configure<MongoDBService.Config.MongoDBSettings>(configuration.GetSection("MongoDBSettings"));
 
-            //services.Configure<MongoDBService.Config.MongoDBSettings>(configuration.GetSection("MongoDBSettings"));
-
-            //services.AddTransient<IMongoDBService, MongoDBService.Services.MongoDBService>();
-
+            services.AddTransient<MongoDBService.Interfaces.IMongoDBService, MongoDBService.Services.MongoDBService>();
             services.AddTransient<IRuneScapeKeyboardService, RuneScapeKeyboardService>();
-
+            services.AddTransient<IRuneScapeStoryTimeService, RuneScapeStoryTimeService>();
             services.AddTransient<App>();
         }
     }

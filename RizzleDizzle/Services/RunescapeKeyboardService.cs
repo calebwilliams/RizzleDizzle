@@ -27,28 +27,17 @@ namespace RizzleDizzle.Services
             List<string> msgQueue = new List<string>();
             CancellationToken cancellation = new CancellationToken();
 
+            Random rand = new Random(); 
             for (int i = 0; i <= msg.Length / 80; i++)
-                msgQueue.Add(msg.Substring((i * 80), (msg.Length - (i * 80))));
-
-            //foreach (var message in msgQueue)
-            //{
-            //    var delay = Task.Run(async () =>
-            //    {
-            //        await _keyboard.SendKeysAsync(message, cancellation);
-            //        await Task.Delay(5000);
-            //    });
-            //    await delay;
-            //}
-
-             msgQueue.ForEach(async (x) =>
             {
                 var delay = Task.Run(async () =>
                 {
-                    await _keyboard.SendKeysAsync(x, cancellation);
-                    await Task.Delay(5000);
+                    await _keyboard.SendKeysAsync(msg.Substring((i * 80), (msg.Length - (i * 80))), cancellation);
+                    var waitTime = rand.Next(5000, 10000); 
+                    await Task.Delay(waitTime);
                 });
                 await delay;
-            });
+            }
         }
 
         public async Task SendMessagesAsync(List<string> msgs)

@@ -1,5 +1,8 @@
 {
   "RunescapeSettings": {
-    "ProcessName" :  "RuneLite"
+    "ProcessName": "RuneLite"
+  },
+  "MongoDBSettings": {
+    "ConnectionString": "mongodb://caleb:fuckoff56@localhost:27017/runescape?readPreference=primary"
   }
 }
