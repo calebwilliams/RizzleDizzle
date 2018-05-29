@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
     <PackageReference Include="InputSimulatorPlus" Version="1.0.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.0-rc1-final" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0-rc1-final" />
@@ -15,6 +16,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0-rc1-final" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0-rc1-final" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0-beta0001" />
+    <PackageReference Include="SharpPcap" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
